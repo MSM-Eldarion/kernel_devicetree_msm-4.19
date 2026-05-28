@@ -5,6 +5,8 @@
 #include "pmi8950.dtsi"
 #include "msm8976-mdss-panels.dtsi"
 
+#include "../../../../../../techpack/xiaomi-eldarion/kernel/dts/xiaomi-eldarion/common/common.dtsi"
+#include "../../../../../../techpack/xiaomi-eldarion/kernel/dts/xiaomi-eldarion/kenzo/kenzo.dtsi"
 
 / {
 	model = "Qualcomm Technologies, Inc. MSM8956 MTP";
