@@ -44,17 +44,6 @@
 	qcom,mdss-pref-prim-intf = "dsi";
 };
 
-&dsi_dual_nt35523_video {
-	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
-	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_wled";
-	qcom,mdss-dsi-bl-min-level = <1>;
-	qcom,mdss-dsi-bl-max-level = <4095>;
-	qcom,mdss-dsi-pan-enable-dynamic-fps;
-	qcom,mdss-dsi-pan-fps-update =
-		"dfps_immediate_porch_mode_hfp";
-	qcom,mdss-dsi-mode-sel-gpio-state =  "dual_mode";
-};
-
 &msm_gpio {
 	pmx_mdss {
 		mdss_dsi_active: mdss_dsi_active {
