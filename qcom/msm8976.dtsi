@@ -161,8 +161,6 @@
 #include "msm-arm-smmu-8976.dtsi"
 #include "msm8976-smp2p.dtsi"
 #include "msm8976-bus.dtsi"
-#include "msm8976-jtag.dtsi"
-#include "msm8976-coresight.dtsi"
 #include "msm8976-pm.dtsi"
 #include "msm8976-gpu.dtsi"
 #include "msm8976-mdss.dtsi"
@@ -1921,18 +1919,6 @@
 		/* GPIO output to wcnss */
 		qcom,gpio-force-stop = <&smp2pgpio_ssr_smp2p_4_out 0 0>;
 		memory-region = <&reloc_mem>;
-	};
-
-	dcc: dcc@b3000 {
-		compatible = "qcom,dcc";
-		reg = <0xb3000 0x1000>,
-		      <0xb4000 0x800>;
-		reg-names = "dcc-base", "dcc-ram-base";
-
-		clocks = <&clock_gcc clk_gcc_dcc_clk>;
-		clock-names = "apb_pclk";
-
-		qcom,save-reg;
 	};
 
 	qcom,adsprpc-mem {
