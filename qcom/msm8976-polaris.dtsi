@@ -282,12 +282,7 @@
 /{
 	polaris_batterydata: qcom,battery-data {
 		qcom,batt-id-range-pct = <100>;
-		#include "batterydata-polaris-4v35-4450mah.dtsi"
 	};
-};
-
-&polaris_4v35_4450mah_data {
-	qcom,batt-id-kohm = <500>;
 };
 
 &qpnp_fg {

@@ -257,7 +257,6 @@
 / {
 	qrd_batterydata: qcom,battery-data {
 		qcom,batt-id-range-pct = <15>;
-		#include "batterydata-qrd-skum-4v4-2920mah.dtsi"
 	};
 };
 
