@@ -166,21 +166,6 @@
 	ranges = <0 0 0 0xffffffff>;
 	compatible = "simple-bus";
 
-	arm64-cpu-erp {
-		compatible = "arm,arm64-cpu-erp";
-		interrupts = <0 275 0>,
-			     <0 276 0>,
-			     <0 273 0>,
-			     <0 274 0>,
-			     <1 7 0>;
-		interrupt-names = "pri-dbe-irq",
-				  "sec-dbe-irq",
-				  "pri-ext-irq",
-				  "sec-ext-irq",
-				  "sbe-irq";
-		poll-delay-ms = <5000>;
-	};
-
 	qcom,msm-gladiator@b1c0000 {
 		compatible = "qcom,msm-gladiator";
 		reg = <0x0b1C0000 0x4000>;
