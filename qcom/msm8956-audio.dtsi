@@ -11,6 +11,7 @@
  * GNU General Public License for more details.
  */
 
+#include <dt-bindings/clock/qcom,audio-ext-clk.h>
 #include "msm-audio-lpass.dtsi"
 #include "msm8976-wsa881x.dtsi"
 
@@ -20,10 +21,10 @@
 };
 
 &soc {
-	qcom,msm-audio-apr {
+	audio_apr: qcom,msm-audio-apr {
 		compatible = "qcom,msm-audio-apr";
-		msm_audio_apr_dummy {
-			compatible = "qcom,msm-audio-apr-dummy";
+		q6core: q6core {
+			compatible = "qcom,q6core-audio";
 		};
 	};
 
@@ -40,6 +41,14 @@
 		pinctrl-names = "aud_active", "aud_sleep";
 		pinctrl-0 = <&cross_conn_det_act>;
 		pinctrl-1 = <&cross_conn_det_sus>;
+	};
+
+	wsa881x_analog_clk: wsa_ana_clk {
+		compatible = "qcom,audio-ref-clk";
+		qcom,codec-ext-clk-src = <AUDIO_LPASS_MCLK_2>;
+		qcom,codec-lpass-ext-clk-freq = <9600000>;
+		qcom,codec-lpass-clk-id = <0x301>;
+		#clock-cells = <1>;
 	};
 
 	ext_codec: sound-9335 {
