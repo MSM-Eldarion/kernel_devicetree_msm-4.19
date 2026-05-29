@@ -50,6 +50,7 @@
 		qcom,tz-device-id = "APPS";
 		qcom,skip-init;
 		qcom,disable-atos;
+		qcom,regulator-names = "vdd";
 		qcom,enable-static-cb;
 		qcom,use-3-lvl-tables;
 		#global-interrupts = <0>;
