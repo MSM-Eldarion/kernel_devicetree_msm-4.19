@@ -17,6 +17,9 @@
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 #include <dt-bindings/regulator/qcom,rpm-smd-regulator.h>
 
+#define MHZ_TO_MBPS(mhz, w) ((mhz * 1000000 * w) / (1024 * 1024))
+#define BW_OPP_ENTRY(mhz, w) opp-mhz {opp-hz = /bits/ 64 <MHZ_TO_MBPS(mhz, w)>;}
+
 / {
 	model = "Qualcomm Technologies, Inc. MSM8976";
 	compatible = "qcom,msm8976";
@@ -423,47 +426,35 @@
 			<  614400 >; /* STURBO */
 	};
 
-	cpubw: qcom,cpubw {
-		compatible = "qcom,devbw";
-		governor = "cpufreq";
-		qcom,src-dst-ports = <1 512>;
-		qcom,active-only;
-		qcom,bw-tbl =
-			<   805 /*   52.8 MHz */ >,
-			<  1244 /*   81.6 MHz */ >,
-			<  1611 /*  105.6 MHz */ >,
-			<  2929 /*  192   MHz */ >,	/* SVS	 */
-			<  4101 /*  268.8 MHz */ >,     /* SVS+ */
-			<  5126 /*  336.0 MHz */ >,	/* NOM  */
-			<  5712 /*  374.4 MHz */ >,
-			<  6152 /*  403.2 MHz */ >,	/* TURBO */
-			<  7104 /*  465.6 MHz */ >;	/* STURBO */
-	};
+		ddr_bw_opp_table: ddr-bw-opp-table {
+                compatible = "operating-points-v2";
+                BW_OPP_ENTRY( 52, 8); /*  805 MB/s */
+                BW_OPP_ENTRY( 81, 8); /* 1244 MB/s */
+                BW_OPP_ENTRY( 105, 8); /* 1611 MB/s */
+                BW_OPP_ENTRY( 192, 8); /* 2929 MB/s */
+                BW_OPP_ENTRY( 268, 8); /* 4101 MB/s */
+                BW_OPP_ENTRY( 336, 8); /* 5126 MB/s */
+                BW_OPP_ENTRY( 374, 8); /* 5712 MB/s */
+                BW_OPP_ENTRY( 403, 8); /* 6152 MB/s */
+                BW_OPP_ENTRY( 465, 8); /* 7104 MB/s */
+        };
 
-	mincpubw: qcom,mincpubw {
-		compatible = "qcom,devbw";
-		governor = "cpufreq";
-		qcom,src-dst-ports = <1 512>;
-		qcom,active-only;
-		qcom,bw-tbl =
-			<   805 /*   52.8 MHz */ >,
-			<  1244 /*   81.6 MHz */ >,
-			<  1611 /*  105.6 MHz */ >,
-			<  2929 /*  192   MHz */ >,	/* SVS	 */
-			<  4101 /*  268.8 MHz */ >,     /* SVS+ */
-			<  5126 /*  336.0 MHz */ >,	/* NOM  */
-			<  5712 /*  374.4 MHz */ >,
-			<  6152 /*  403.2 MHz */ >,	/* TURBO */
-			<  7104 /*  465.6 MHz */ >;	/* STURBO */
-	};
+        cpu_cpu_ddr_bw: qcom,cpu-cpu-ddr-bw {
+                compatible = "qcom,devbw";
+                governor = "performance";
+                qcom,src-dst-ports =
+                        <MSM_BUS_MASTER_AMPSS_M0 MSM_BUS_SLAVE_EBI_CH0>;
+                qcom,active-only;
+                operating-points-v2 = <&ddr_bw_opp_table>;
+        };
 
-	qcom,cpu-bwmon@408000 {
+	cpu_cpu_ddr_bwmon: qcom,cpu-cpu-ddr-bwmon@408000 {
 		compatible = "qcom,bimc-bwmon2";
 		reg = <0x408000 0x300>, <0x401000 0x200>;
 		reg-names = "base", "global_base";
-		interrupts = <0 183 4>;
+		interrupts = <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>;
 		qcom,mport = <0>;
-		qcom,target-dev = <&cpubw>;
+		qcom,target-dev = <&cpu_cpu_ddr_bw>;
 	};
 
 	qcom,msmcci-ccimon {
